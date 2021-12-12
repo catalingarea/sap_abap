@@ -1,0 +1,44 @@
+REPORT z_my_test_program_userabap12.
+
+
+PARAMETERS pa_f TYPE p DECIMALS 1. " declaram box de insert date
+PARAMETERS pa_s TYPE p DECIMALS 1. " p - insert de tip decimal
+PARAMETERS pa_d TYPE p DECIMALS 1. " declarat pa_d pt a afisa rezultatul final decimal cu  un zecimal dupa virgula.
+
+
+SELECTION-SCREEN SKIP 2. " coboram cu 1 randuri mai jos
+SELECTION-SCREEN PUSHBUTTON 15(10) pa1 USER-COMMAND fc1.
+SELECTION-SCREEN PUSHBUTTON 30(10) pa2 USER-COMMAND fc2.
+SELECTION-SCREEN PUSHBUTTON 45(10) pa5 USER-COMMAND fc5.
+SELECTION-SCREEN SKIP 1.
+SELECTION-SCREEN PUSHBUTTON 15(10) pa3 USER-COMMAND fc3.
+SELECTION-SCREEN PUSHBUTTON 30(10) pa4 USER-COMMAND fc4.
+SELECTION-SCREEN PUSHBUTTON 45(10) pa6 USER-COMMAND fc6.
+
+
+INITIALIZATION.  " fiecare buton primeste nume
+  pa1 = 'Adunare'.
+  pa2 = 'Scadere'.
+  pa3 = 'Impartire'.
+  pa4 = 'Inmultire'.
+  pa5 = 'Clean'.
+  pa6 = 'Exit'.
+
+
+
+AT SELECTION-SCREEN.
+  CASE sy-ucomm.
+    WHEN 'FC1'.
+      pa_d = pa_f + pa_s.
+    WHEN 'FC2'.
+      pa_d = pa_f - pa_s.
+    WHEN 'FC3'.
+      pa_d = pa_f / pa_s.
+    WHEN 'FC4'.
+      pa_d = pa_f * pa_s.
+    WHEN 'FC5'.
+      CLEAR: pa_f, pa_s,pa_d.
+      WHEN 'FC6'.
+        LEAVE PROGRAM.
+    WHEN OTHERS.
+  ENDCASE.
