@@ -1,4 +1,4 @@
-REPORT z_my_2nd_program_userabap12.
+REPORT z_my_program_userabap12.
 * Data Declaration
 PARAMETERS f_number TYPE p.
 PARAMETERS s_number TYPE p.
