@@ -1,0 +1,93 @@
+
+DATA insert_data TYPE z012_tab_screen.
+DATA check_unique_id TYPE z012_tab_screen-unique_id.
+
+MODULE get_data OUTPUT.
+  SET PF-STATUS '2022'.
+  SET TITLEBAR 'SCREEN 2022'.
+ENDMODULE.
+
+
+
+MODULE selection_search_2022 INPUT.
+  IF sy-ucomm = 'FCT_SEARCH'.
+
+    SELECT
+    unique_id
+    nume
+    prenume
+    pronume
+    an_nastere
+    FROM z012_tab_screen
+    INTO CORRESPONDING FIELDS OF z012_tab_screen
+    WHERE z012_tab_screen~unique_id = check_unique_id.
+    ENDSELECT.
+  ENDIF.
+ENDMODULE.
+
+MODULE exit OUTPUT.
+  CASE sy-ucomm.
+    WHEN 'BTN_EXIT'.
+      LEAVE PROGRAM.
+    WHEN OTHERS.
+  ENDCASE.
+ENDMODULE.
+
+MODULE clean OUTPUT.
+  IF sy-ucomm = 'BTN_CLEAR'.
+    CLEAR: z012_tab_screen-pronume, z012_tab_screen-nume, z012_tab_screen-prenume, z012_tab_screen-an_nastere, z012_tab_screen-unique_id, check_unique_id.
+    CLEAR z012_tab_screen.
+  ENDIF.
+
+ENDMODULE.
+
+
+MODULE status_icon OUTPUT.
+*  SET PF-STATUS 'xxxxxxxx'.
+*  SET TITLEBAR 'xxx'.insert_data
+*   data: icon_name TYPE c LENGTH 20.
+*   icon_name = 'STATUS_ICON'.
+*CASE sy-ucomm.
+*  WHEN check_unique_id
+
+ENDMODULE.
+
+
+MODULE input_into_db INPUT.
+
+
+  IF  sy-ucomm = 'BTN_SAVE'.
+    insert_data-unique_id = z012_tab_screen-unique_id.
+    insert_data-pronume = z012_tab_screen-pronume.
+    insert_data-nume = z012_tab_screen-nume.
+    insert_data-prenume = z012_tab_screen-prenume.
+    insert_data-an_nastere = z012_tab_screen-an_nastere.
+
+    INSERT INTO z012_tab_screen VALUES insert_data.
+
+  ENDIF.
+
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  CLEAR_AFTER_SEARCH  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*&---------------------------------------------------------------------*
+*&      Module  CLEAR_HELP  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE clear_help OUTPUT.
+  IF check_unique_id NE z012_tab_screen-unique_id.
+
+    CLEAR: z012_tab_screen-pronume, z012_tab_screen-nume, z012_tab_screen-prenume, z012_tab_screen-an_nastere, z012_tab_screen-unique_id, check_unique_id.
+
+  ENDIF.
+
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  CLEAR_SEARCH  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*

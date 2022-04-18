@@ -1,0 +1,20 @@
+*&---------------------------------------------------------------------*
+*& Report  Ex. Screens_
+*&Catalin_Garea
+*&             catalin.garea@gmail.com
+
+REPORT z012_test.
+TABLES z012_tab_screen.
+
+
+DATA:
+  BEGIN OF data_table,
+    unique_id  TYPE z012_tab_screen-unique_id,
+    pronume    TYPE z012_tab_screen-pronume,
+    nume       TYPE z012_tab_screen-nume,
+    prenume    TYPE z012_tab_screen-prenume,
+    an_nastere TYPE z012_tab_screen-an_nastere,
+  END OF data_table.
+
+CALL SCREEN 2022.
+INCLUDE z012_screens_get_data2022.
